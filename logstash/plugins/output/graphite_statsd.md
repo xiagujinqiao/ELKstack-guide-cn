@@ -20,34 +20,34 @@ increment：增量，一个计量周期内，某个数字接收了多少次，�
 timing：时间范围内，某种数字的最大值，最小值，平均值，比如nginx的响应时间request_time。<br />
 
 ##配置graphite和statsd
-1.安装cairo和pycairo
+1.安装cairo和pycairo<br />
 yum -y install cairo pycairo
 
 2.pip安装方式
-pip是python的一个组件，安装pip的方法可以参考pip安装和使用教程。
-yum install python-devel
+pip是python的一个组件，安装pip的方法可以参考pip安装和使用教程。<br />
+yum install python-devel<br />
 pip install django django-tagging carbon whisper graphite-web uwsgi
 
 3.配置graphite
-cd /opt/graphite/webapp/graphite
-cp local_settings.py.example local_settings.py
-python manage.py syncdb
+cd /opt/graphite/webapp/graphite<br />
+cp local_settings.py.example local_settings.py<br />
+python manage.py syncdb<br />
 修改local_settings.py中的DATABASE为设置的db信息
 
 4.启动cabon
-cd /opt/graphite/conf/
-cp carbon.conf.example carbon.conf
-cp storage-schemas.conf.example storage-schemas.conf
-cd /opt/graphite/
-./bin/carbon-cache.py start
+cd /opt/graphite/conf/<br />
+cp carbon.conf.example carbon.conf<br />
+cp storage-schemas.conf.example storage-schemas.conf<br />
+cd /opt/graphite/<br />
+./bin/carbon-cache.py start<br />
 
 Starting carbon-cache (instance a)
 
 5.安装statsd
-cd /opt/
-git clone git://github.com/etsy/statsd.git
-cd /opt/statsd
-cp exampleConfig.js Config.js
+cd /opt/<br />
+git clone git://github.com/etsy/statsd.git<br />
+cd /opt/statsd<br />
+cp exampleConfig.js Config.js<br />
 修改Config.js中的配置
 ```
 {
@@ -133,4 +133,4 @@ output {
 *[statsd github]：(https://github.com/etsy/statsd/tree/master/docs)<br />
 *[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)<br />
 *[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)<br />
-		(http://blog.csdn.net/cnweike/article/details/30250483)<br />
+(http://blog.csdn.net/cnweike/article/details/30250483)<br />
