@@ -131,6 +131,4 @@ output {
 
 ##参考文档：
 * [statsd github](https://github.com/etsy/statsd/tree/master/docs)<br />
-* [logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)<br />
-* [第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)<br />
-* [第三方博客]：(http://blog.csdn.net/cnweike/article/details/30250483)<br />
+* [logstash 官方文档](https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)<br />
