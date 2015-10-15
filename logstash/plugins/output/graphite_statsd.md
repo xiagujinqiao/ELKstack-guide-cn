@@ -129,8 +129,8 @@ output {
 * gauge：代表一个度量的即时值,用法同count，A gauge metric. metric_name => gauge as hash；
 * set：statsd 支持在两个刷新间隔的独立事件的计数，set存储所有发送的events，A set metric. metric_name => "string" to append as hash。
 
-参考文档：
-*[statsd github]：(https://github.com/etsy/statsd/tree/master/docs/)
-*[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement/)
-*[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html/)
-		(http://blog.csdn.net/cnweike/article/details/30250483/)
+##参考文档：
+*[statsd github]：(https://github.com/etsy/statsd/tree/master/docs)<br />
+*[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)<br />
+*[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)<br />
+		(http://blog.csdn.net/cnweike/article/details/30250483)<br />
