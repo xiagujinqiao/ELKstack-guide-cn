@@ -1,4 +1,4 @@
-##基本
+##基础介绍
 Graphite是一个Python写的，采用django框架的画图工具，Graphite将数据以图形的方式展现出来。它主要做两件事：<br />
 存储时间序列数据<br />
 根据需要呈现数据的图形<br />
@@ -130,8 +130,7 @@ output {
 * set：statsd 支持在两个刷新间隔的独立事件的计数，set存储所有发送的events，A set metric. metric_name => "string" to append as hash。
 
 ##参考文档：
-*[statsd github]：(https://github.com/etsy/statsd/tree/master/docs)<br />
-*[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)<br />
-*[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)<br />
-(http://blog.csdn.net/cnweike/article/details/30250483)<br />
-* statsd github：[statsd github](https://github.com/etsy/statsd/tree/master/docs)<br />
+* [statsd github](https://github.com/etsy/statsd/tree/master/docs)<br />
+* [logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)<br />
+* [第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)<br />
+* [第三方博客]：(http://blog.csdn.net/cnweike/article/details/30250483)<br />
