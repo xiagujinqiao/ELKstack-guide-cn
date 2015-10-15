@@ -1,4 +1,4 @@
-基本
+##基本
 Graphite是一个Python写的，采用django框架的画图工具，Graphite将数据以图形的方式展现出来。它主要做两件事：
 存储时间序列数据
 根据需要呈现数据的图形
@@ -18,7 +18,7 @@ count:对数字的计数，比如，每秒接收一个数字，一个计量周�
 increment：增量，一个计量周期内，某个数字接收了多少次，比如nginx的status状态码
 timing：时间范围内，某种数字的最大值，最小值，平均值，比如nginx的响应时间request_time
 
-
+##配置graphite和statsd
 1. 安装cairo和pycairo
 yum -y install cairo pycairo
 
@@ -48,17 +48,20 @@ git clone git://github.com/etsy/statsd.git
 cd /opt/statsd
 cp exampleConfig.js Config.js
 修改Config.js中的配置
+```
 {
   graphitePort: 2003
 , graphiteHost: "10.10.10.124"
 , port: 8125
 , backends: [ "./backends/graphite" ]
 }
+```
 
 6.nginx和uwsgi配置
 cd /opt/graphite/webapp/graphite
 新建配置文件：
 more wsgi_graphite.xml
+```
 <uwsgi>
     <socket>0.0.0.0:8630</socket>
     <workers>2</workers>
@@ -73,10 +76,12 @@ more wsgi_graphite.xml
     <logdate>true</logdate>
     <daemonize>/var/log/uwsgi_graphite.log</daemonize>
 </uwsgi>
+```
 cp /opt/graphite/conf/graphite.wsgi /opt/graphite/webapp/graphite/wsgi.py
 
 nginx的uwsgi配置：
 cat /usr/local/nginx/conf/conf.d/graphite.conf
+```
 server {
     listen 8081;
     server_name graphite;
@@ -92,7 +97,7 @@ server {
         proxy_read_timeout 300;
     }
 }
-
+```
 7.启动uwsgi和nginx
 uwsgi -x /opt/graphite/webapp/graphite/wsgi_graphite.xml
 systemctl nginx reload
@@ -101,6 +106,7 @@ systemctl nginx reload
 可以做个小测试：echo "test.logstash.num:100|c" | nc -w 1 -u $IP 8125如果安装配置是正常的，在graphite的左侧metrics->stats->test->logstash->num的表，statsd里面多了numStats等数据。
 
 9.logstash output到statsd配置详解
+```
 output {
 	if [type] == "nginxapiaccess" {  #类型判断，避免重复数据
 	statsd {
@@ -114,16 +120,15 @@ output {
 	}
 }
 }
+```
 
 其他解释：
-decrement：递减运算，没用过，用法同increment;
-gauge：代表一个度量的即时值,用法同count，A gauge metric. metric_name => gauge as hash；
-set：statsd 支持在两个刷新间隔的独立事件的计数，set存储所有发送的events，A set metric. metric_name => "string" to append as hash。
+* decrement：递减运算，没用过，用法同increment;
+* gauge：代表一个度量的即时值,用法同count，A gauge metric. metric_name => gauge as hash；
+* set：statsd 支持在两个刷新间隔的独立事件的计数，set存储所有发送的events，A set metric. metric_name => "string" to append as hash。
 
 参考文档：
-https://github.com/etsy/statsd/tree/master/docs
-http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html
-http://blog.csdn.net/cnweike/article/details/30250483
-
-
-
+[statsd github]:(https://github.com/etsy/statsd/tree/master/docs)
+[logstash 官方文档]:(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)
+[第三方博客]:(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)
+		(http://blog.csdn.net/cnweike/article/details/30250483)
