@@ -1,23 +1,23 @@
 ##基本
-Graphite是一个Python写的，采用django框架的画图工具，Graphite将数据以图形的方式展现出来。它主要做两件事：
-存储时间序列数据
-根据需要呈现数据的图形
+Graphite是一个Python写的，采用django框架的画图工具，Graphite将数据以图形的方式展现出来。它主要做两件事：<br />
+存储时间序列数据<br />
+根据需要呈现数据的图形<br />
 
-Graphite由三个软件组件组成：
-简单架构
-carbon是一个Twisted守护进程，组成一个Graphite安装的存储后端，监听时间序列数据；
-whisper是一个简单的数据库，用来存储时间序列数据，类似于RRD；
-graphite webapp是一个Django webapp；
+Graphite由三个软件组件组成：<br />
+简单架构<br />
+carbon是一个Twisted守护进程，组成一个Graphite安装的存储后端，监听时间序列数据；<br />
+whisper是一个简单的数据库，用来存储时间序列数据，类似于RRD；<br />
+graphite webapp是一个Django webapp；<br />
 
-statsd:
-一个用于统计汇聚数据的（默认udp，看官方github，也有tcp，见https://github.com/etsy/statsd/blob/master/docs/server.md ）服务，可以将数据发送到graphite等；
-Graphite以树状结构存储监控数据，所以statsd的数据的key也一定得是 "namespace.sender.metric" 这样的形式。而在 outputs/statsd 插件中，就会以三个配置参数来拼接成这种形式。
-最基本的做法是：把statsd计数或延迟数据每隔几秒钟就会发出的聚集值到后台。例如总量，最大，最小，平均，标准偏差，等等。
+statsd:<br />
+一个用于统计汇聚数据的（默认udp，看官方github，也有tcp，见https://github.com/etsy/statsd/blob/master/docs/server.md ）服务，可以将数据发送到graphite等；<br />
+Graphite以树状结构存储监控数据，所以statsd的数据的key也一定得是 "namespace.sender.metric" 这样的形式。而在 outputs/statsd 插件中，就会以三个配置参数来拼接成这种形式。<br />
+最基本的做法是：把statsd计数或延迟数据每隔几秒钟就会发出的聚集值到后台。例如总量，最大，最小，平均，标准偏差，等等。<br />
 
-statsd metrics简单解释：
-count:对数字的计数，比如，每秒接收一个数字，一个计量周期内，所有数字的和，比如nginx的body_bytes_sent；
-increment：增量，一个计量周期内，某个数字接收了多少次，比如nginx的status状态码；
-timing：时间范围内，某种数字的最大值，最小值，平均值，比如nginx的响应时间request_time。
+statsd metrics简单解释：<br />
+count:对数字的计数，比如，每秒接收一个数字，一个计量周期内，所有数字的和，比如nginx的body_bytes_sent；<br />
+increment：增量，一个计量周期内，某个数字接收了多少次，比如nginx的status状态码；<br />
+timing：时间范围内，某种数字的最大值，最小值，平均值，比如nginx的响应时间request_time。<br />
 
 ##配置graphite和statsd
 1.安装cairo和pycairo
