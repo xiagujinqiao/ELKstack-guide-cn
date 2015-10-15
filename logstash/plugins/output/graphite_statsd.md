@@ -10,19 +10,20 @@ whisper是一个简单的数据库，用来存储时间序列数据，类似于R
 graphite webapp是一个Django webapp；
 
 statsd:
-一个用于统计汇聚数据的（默认udp，看官方github，也有tcp，https://github.com/etsy/statsd/blob/master/docs/server.md ）服务，可以将数据发送到graphite等；
-Graphite以树状结构存储监控数据，所以statsd的数据的key也一定得是 "namespace.sender.metric" 这样的形式。而在 outputs/statsd 插件中，就会以三个配置参数来拼接成这种形式：
+一个用于统计汇聚数据的（默认udp，看官方github，也有tcp，见https://github.com/etsy/statsd/blob/master/docs/server.md ）服务，可以将数据发送到graphite等；
+Graphite以树状结构存储监控数据，所以statsd的数据的key也一定得是 "namespace.sender.metric" 这样的形式。而在 outputs/statsd 插件中，就会以三个配置参数来拼接成这种形式。
 最基本的做法是：把statsd计数或延迟数据每隔几秒钟就会发出的聚集值到后台。例如总量，最大，最小，平均，标准偏差，等等。
+
 statsd metrics简单解释：
 count:对数字的计数，比如，每秒接收一个数字，一个计量周期内，所有数字的和，比如nginx的body_bytes_sent；
-increment：增量，一个计量周期内，某个数字接收了多少次，比如nginx的status状态码
-timing：时间范围内，某种数字的最大值，最小值，平均值，比如nginx的响应时间request_time
+increment：增量，一个计量周期内，某个数字接收了多少次，比如nginx的status状态码；
+timing：时间范围内，某种数字的最大值，最小值，平均值，比如nginx的响应时间request_time。
 
 ##配置graphite和statsd
-1. 安装cairo和pycairo
+1.安装cairo和pycairo
 yum -y install cairo pycairo
 
-2. pip安装方式
+2.pip安装方式
 pip是python的一个组件，安装pip的方法可以参考pip安装和使用教程。
 yum install python-devel
 pip install django django-tagging carbon whisper graphite-web uwsgi
@@ -129,7 +130,7 @@ output {
 * set：statsd 支持在两个刷新间隔的独立事件的计数，set存储所有发送的events，A set metric. metric_name => "string" to append as hash。
 
 参考文档：
-*[statsd github]：(https://github.com/etsy/statsd/tree/master/docs)
-*[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)
-*[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)
-		(http://blog.csdn.net/cnweike/article/details/30250483)
+*[statsd github]：(https://github.com/etsy/statsd/tree/master/docs/)
+*[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement/)
+*[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html/)
+		(http://blog.csdn.net/cnweike/article/details/30250483/)
