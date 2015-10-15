@@ -10,7 +10,7 @@ whisper是一个简单的数据库，用来存储时间序列数据，类似于R
 graphite webapp是一个Django webapp；
 
 statsd:
-一个用于统计汇聚数据的（默认udp，看官方github，也有tcp，https://github.com/etsy/statsd/blob/master/docs/server.md）服务，可以将数据发送到graphite等；
+一个用于统计汇聚数据的（默认udp，看官方github，也有tcp，https://github.com/etsy/statsd/blob/master/docs/server.md ）服务，可以将数据发送到graphite等；
 Graphite以树状结构存储监控数据，所以statsd的数据的key也一定得是 "namespace.sender.metric" 这样的形式。而在 outputs/statsd 插件中，就会以三个配置参数来拼接成这种形式：
 最基本的做法是：把statsd计数或延迟数据每隔几秒钟就会发出的聚集值到后台。例如总量，最大，最小，平均，标准偏差，等等。
 statsd metrics简单解释：
@@ -77,6 +77,7 @@ more wsgi_graphite.xml
     <daemonize>/var/log/uwsgi_graphite.log</daemonize>
 </uwsgi>
 ```
+
 cp /opt/graphite/conf/graphite.wsgi /opt/graphite/webapp/graphite/wsgi.py
 
 nginx的uwsgi配置：
@@ -103,7 +104,7 @@ uwsgi -x /opt/graphite/webapp/graphite/wsgi_graphite.xml
 systemctl nginx reload
 
 8.数据测试：
-可以做个小测试：echo "test.logstash.num:100|c" | nc -w 1 -u $IP 8125如果安装配置是正常的，在graphite的左侧metrics->stats->test->logstash->num的表，statsd里面多了numStats等数据。
+可以做个小测试：echo "test.logstash.num:100|c" | nc -w 1 -u $IP $port 如果安装配置是正常的，在graphite的左侧metrics->stats->test->logstash->num的表，statsd里面多了numStats等数据。
 
 9.logstash output到statsd配置详解
 ```
@@ -128,7 +129,7 @@ output {
 * set：statsd 支持在两个刷新间隔的独立事件的计数，set存储所有发送的events，A set metric. metric_name => "string" to append as hash。
 
 参考文档：
-[statsd github]:(https://github.com/etsy/statsd/tree/master/docs)
-[logstash 官方文档]:(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)
-[第三方博客]:(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)
+*[statsd github]：(https://github.com/etsy/statsd/tree/master/docs)
+*[logstash 官方文档]：(https://www.elastic.co/guide/en/logstash/current/plugins-outputs-statsd.html#plugins-outputs-statsd-decrement)
+*[第三方博客]：(http://blog.lanyonm.org/articles/2013/11/27/pushing-web-server-response-codes-graphite-logstash.html)
 		(http://blog.csdn.net/cnweike/article/details/30250483)
