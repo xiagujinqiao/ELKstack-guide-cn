@@ -38,17 +38,29 @@ log_format main "$http_x_forwarded_for | $time_local | $request | $status | $bod
 filter {
     ruby {
         init => "@kname = ['http_x_forwarded_for','time_local','request','status','body_bytes_sent','request_body','content_length','http_referer','http_user_agent','nuid','http_cookie','remote_addr','hostname','upstream_addr','upstream_response_time','request_time']"
-        code => "event.append(Hash[@kname.zip(event['message'].split(' | '))])"
+        code => "
+            new_event = LogStash::Event.new(Hash[@kname.zip(event.get('message').split('|'))])
+            new_event.remove('@timestamp')
+            event.append(new_event)""
+        "
     }
     if [request] {
         ruby {
             init => "@kname = ['method','uri','verb']"
-            code => "event.append(Hash[@kname.zip(event['request'].split(' '))])"
+            code => "
+                new_event = LogStash::Event.new(Hash[@kname.zip(event.get('request').split(' '))])
+                new_event.remove('@timestamp')
+                event.append(new_event)""
+            "
         }
         if [uri] {
             ruby {
                 init => "@kname = ['url_path','url_args']"
-                code => "event.append(Hash[@kname.zip(event['request'].split('?'))])"
+                code => "
+                    new_event = LogStash::Event.new(Hash[@kname.zip(event.get('uri').split('?'))])
+                    new_event.remove('@timestamp')
+                    event.append(new_event)""
+                "
             }
             kv {
                 prefix => "url_"
@@ -126,12 +138,16 @@ filter {
         if [uri] {
             ruby {
                 init => "@kname = ['url_path','url_args']"
-                code => "event.append(Hash[@kname.zip(event['request'].split('?'))])"
+                code => "
+                    new_event = LogStash::Event.new(Hash[@kname.zip(event.get('request').split('?'))])
+                    new_event.remove('@timestamp')
+                    event.append(new_event)""
+                "
             }
             if [url_args] {
                 ruby {
                     init => "@kname = ['key','value']"
-                    code => "event['nested_args'] = event['url_args'].split('&').collect {|i| Hash[@kname.zip(i.split('='))]}"
+                    code => "event.set('nested_args', event.get('url_args').split('&').collect {|i| Hash[@kname.zip(i.split('='))]})"
                     remove_field => [ "url_args","uri","request" ]
                 }
             }
